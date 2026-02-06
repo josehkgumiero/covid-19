@@ -1,0 +1,72 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+.Python
+
+# =========================
+# Virtual environments
+# =========================
+env/
+venv/
+.venv/
+.env/
+
+# =========================
+# Jupyter Notebook
+# =========================
+*.ipynb_checkpoints/
+
+# =========================
+# IDEs and editors
+# =========================
+.vscode/
+.idea/
+*.code-workspace
+
+# =========================
+# Operating system files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs and reports
+# =========================
+*.log
+logs/
+reports/
+
+# =========================
+# Build and distribution
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Cache and temporary files
+# =========================
+.cache/
+tmp/
+temp/
+
+# =========================
+# Testing and coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Project data directories
+# =========================
+covid-19-data-science-urban-epidemic-modelling-in-python/data/
+data-science-covid-19-data-analysis-visualization-deployment/data/
+data-science-hands-on-covid-19-data-analysis-visualization/data/
+data-science-machine-learning-for-covid-19-using-Python/data/
+data-science-on-covid-19-corona-virus-spread-data/data/
