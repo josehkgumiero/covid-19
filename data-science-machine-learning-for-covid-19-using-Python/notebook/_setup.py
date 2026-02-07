@@ -2,16 +2,17 @@
 _setup.py
 
 Configura dinamicamente o PYTHONPATH para permitir a importação
-de módulos localizados na pasta /src e em suas camadas internas
-(ingestion, cleaning, transformation, utils).
+de módulos localizados na pasta /src e em TODAS as suas camadas
+internas do ciclo de Machine Learning.
 
-Este script deve ser executado antes de qualquer import nos notebooks.
+Este script deve ser executado antes de qualquer import
+nos notebooks ou ambientes interativos.
 """
 
 from pathlib import Path
 import sys
 import logging
-from typing import List
+from typing import Iterable
 
 
 # =========================
@@ -19,60 +20,82 @@ from typing import List
 # =========================
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s"
 )
 
 logger = logging.getLogger(__name__)
 
 
-def add_paths_to_pythonpath(paths: List[Path]) -> None:
+def add_paths_to_pythonpath(paths: Iterable[Path]) -> None:
     """
     Adiciona múltiplos caminhos ao PYTHONPATH, se ainda não existirem.
 
     Args:
-        paths (List[Path]): Lista de caminhos a serem adicionados.
+        paths (Iterable[Path]): Caminhos a serem adicionados.
     """
     for path in paths:
-        if str(path) not in sys.path:
-            sys.path.insert(0, str(path))
-            logger.info("Added to PYTHONPATH: %s", path)
+        resolved_path = str(path.resolve())
+
+        if resolved_path not in sys.path:
+            sys.path.insert(0, resolved_path)
+            logger.info("Added to PYTHONPATH: %s", resolved_path)
         else:
-            logger.debug("Already in PYTHONPATH: %s", path)
+            logger.debug("Already in PYTHONPATH: %s", resolved_path)
+
+
+def discover_src_layers(src_path: Path) -> list[Path]:
+    """
+    Descobre automaticamente as camadas válidas dentro de /src.
+
+    Args:
+        src_path (Path): Caminho da pasta src.
+
+    Returns:
+        list[Path]: Lista de pastas válidas a serem adicionadas ao PYTHONPATH.
+    """
+    if not src_path.exists():
+        raise FileNotFoundError(f"src directory not found at: {src_path}")
+
+    layers = [
+        src_path / "config",
+        src_path / "evaluation",
+        src_path / "inference",
+        src_path / "ingestion",
+        src_path / "pipeline",
+        src_path / "preprocessing",
+        src_path / "training",
+        src_path / "transformation",
+        src_path / "utils",
+        src_path / "persistence"
+    ]
+
+    existing_layers = [layer for layer in layers if layer.exists()]
+
+    if not existing_layers:
+        raise RuntimeError("No valid src layers found to add to PYTHONPATH.")
+
+    return [src_path, *existing_layers]
 
 
 def add_src_layers_to_path() -> None:
     """
-    Localiza a pasta /src e adiciona suas principais camadas
-    ao PYTHONPATH.
+    Localiza a pasta /src a partir da localização do arquivo atual
+    e adiciona todas as camadas do projeto ao PYTHONPATH.
     """
     try:
-        current_file: Path = Path(__file__).resolve()
+        current_file = Path(__file__).resolve()
 
-        # notebook/_setup.py → notebook → project root
-        project_root: Path = current_file.parent.parent
-        src_path: Path = project_root / "src"
+        # notebooks/_setup.py → notebooks → project root
+        project_root = current_file.parent.parent
+        src_path = project_root / "src"
 
-        if not src_path.exists():
-            raise FileNotFoundError(f"src directory not found at: {src_path}")
+        logger.info("Project root detected at: %s", project_root)
+        logger.info("SRC path detected at: %s", src_path)
 
-        # Camadas do projeto (conforme arquitetura)
-        layer_dirs: List[Path] = [
-            src_path,
-            src_path / "ingestion",
-            src_path / "cleaning",
-            src_path / "transformation",
-            src_path / "utils",
-        ]
+        layers_to_add = discover_src_layers(src_path)
+        add_paths_to_pythonpath(layers_to_add)
 
-        # Valida existência das camadas
-        existing_layers: List[Path] = [
-            layer for layer in layer_dirs if layer.exists()
-        ]
-
-        if not existing_layers:
-            raise RuntimeError("No valid src layers found to add to PYTHONPATH.")
-
-        add_paths_to_pythonpath(existing_layers)
+        logger.info("PYTHONPATH successfully configured")
 
     except Exception as error:
         logger.error(
