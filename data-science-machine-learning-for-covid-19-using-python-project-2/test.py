@@ -1,13 +1,25 @@
+import pandas as pd
 
-RAW_DAILY_BASE = (
+import json
+
+
+RAW_DAILY_US_BASE = (
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/"
-    "csse_covid_19_data/csse_covid_19_daily_reports_us'"
+    "csse_covid_19_data/csse_covid_19_daily_reports_us/01-01-2021.csv"
 )
 
+df_states = pd.read_csv(RAW_DAILY_US_BASE)
 
-df_states = pd.read_csv(RAW_DAILY_BASE)
+print(df_states)
+with open("us_state_abbrev.json") as f:
+    us_state_abbrev = json.load(f)
 
-df_states['CODE'] = df_states['Province_State'].map(us_state_abbrev)
+state_to_code = {v: k for k, v in us_state_abbrev.items()}
+
+
+df_states['CODE'] = df_states['Province_State'].map(state_to_code)
+
+print(df_states['CODE'] )
 
 fig_us = go.Figure(data=go.Choropleth(
     locations=df_states['CODE'],

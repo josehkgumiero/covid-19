@@ -92,7 +92,13 @@ class CovidDataLoader:
     @staticmethod
     def load_us_daily(date: datetime) -> pd.DataFrame:
         url = f"{RAW_DAILY_US_BASE}{date.strftime(DATE_FORMAT)}.csv"
-        return pd.read_csv(url)
+        df = pd.read_csv(url)
+
+        if "Province_State" not in df.columns:
+            raise ValueError("Invalid US daily report format")
+
+        return df
+
 
 # =========================================================
 # Services
@@ -224,35 +230,20 @@ class CardFactory:
 
 class USStatesService:
     @staticmethod
-    def prepare(df: pd.DataFrame) -> pd.DataFrame:
+    def prepare(df: pd.DataFrame, state_abbrev: dict) -> pd.DataFrame:
         df = df.copy()
-        df["CODE"] = df["Province_State"].map(us_state_abbrev)
-        df = df.dropna(subset=["CODE"])
+
+        state_to_code = {v: k for k, v in state_abbrev.items()}
+
+        df["CODE"] = df["Province_State"].map(state_to_code)
+        df["Confirmed"] = pd.to_numeric(df["Confirmed"], errors="coerce")
+
+        df = df.dropna(subset=["CODE", "Confirmed"])
+        df = df[df["Confirmed"] > 0]
+
         return df
 
-class FigureFactory:
 
-    @staticmethod
-    def us_states_choropleth(df: pd.DataFrame):
-        fig = go.Figure(
-            data=go.Choropleth(
-                locations=df["CODE"],
-                locationmode="USA-states",
-                z=df["Confirmed"],
-                text=df["Province_State"],
-                colorscale="Reds",
-                colorbar_title="Confirmed Cases",
-            )
-        )
-
-        fig.update_layout(
-            title_text="COVID-19 Cases – United States",
-            geo_scope="usa",
-            autosize=True,
-            margin=dict(l=0, r=0, t=50, b=0),
-        )
-
-        return fig
 
 
 
@@ -283,8 +274,12 @@ countries = sorted(
 df_countries = CountryTableService.build(df_today)
 
 df_us_states_raw = CovidDataLoader.load_us_daily(date_today)
-df_us_states = USStatesService.prepare(df_us_states_raw)
-fig_us_states = FigureFactory.us_states_choropleth(df_us_states)
+
+df_us_states = USStatesService.prepare(
+    df_us_states_raw,
+    us_state_abbrev
+)
+
 
 
 
@@ -325,6 +320,7 @@ fig_world_scatter = px.scatter_geo(
 )
 
 
+
 # =========================================================
 # WORLD MAP RADIO BUTTONS
 # =========================================================
@@ -340,6 +336,34 @@ radio_buttons_world = dcc.RadioItems(
         "marginRight": "20px"
     },
 )
+
+
+
+
+
+fig_us = go.Figure(
+    go.Choropleth(
+        locations=df_us_states["CODE"],
+        z=df_us_states["Confirmed"],
+        locationmode="USA-states",
+        text=df_us_states["Province_State"],
+        colorscale="Reds",
+        colorbar=dict(title="Confirmed Cases"),
+        zmin=df_us_states["Confirmed"].min(),
+        zmax=df_us_states["Confirmed"].max(),
+    )
+)
+
+fig_us.update_layout(
+    title_text="COVID Cases – United States",
+    geo=dict(
+        scope="usa",
+        projection=go.layout.geo.Projection(type="albers usa"),
+    ),
+    autosize=True,
+    margin=dict(l=0, r=0, t=50, b=0),
+)
+
 
 
 # =========================================================
@@ -488,20 +512,31 @@ app.layout = dbc.Container(
         html.Hr(),
 
         dbc.Row(
-            dbc.Col(html.H4("United States COVID-19 Map"), width=10),
+            dbc.Col(html.H4("United States COVID-19 – State Data"), width=10),
             justify="center",
         ),
 
         dbc.Row(
             dbc.Col(
-                dcc.Graph(
-                    id="us-states-map",
-                    figure=fig_us_states
+                dash_table.DataTable(
+                    columns=[
+                        {"name": c.replace("_", " "), "id": c}
+                        for c in df_us_states_table.columns
+                    ],
+                    data=df_us_states_table.to_dict("records"),
+                    page_action="native",
+                    page_size=15,
+                    sort_action="native",
+                    filter_action="native",
+                    style_table={"overflowX": "auto"},
+                    style_header={"fontWeight": "bold"},
+                    style_cell={"textAlign": "center"},
                 ),
-                width=10
+                width=10,
             ),
             justify="center",
-        )
+        ),
+
 
     ],
     fluid=True,
