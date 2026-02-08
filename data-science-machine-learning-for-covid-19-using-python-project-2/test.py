@@ -1,39 +1,24 @@
-import pandas as pd
 
-import json
-
-
-RAW_DAILY_US_BASE = (
-    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/"
-    "csse_covid_19_data/csse_covid_19_daily_reports_us/01-01-2021.csv"
+radio_button_vaccine = dcc.RadioItem(
+    id='radio_button_vaccine',
+    options=[
+        {'label': 'Total Vaccinations', 'value': 'total_vaccinations'},
+        {'label': 'People Vaccinated per Hundred', 'value': 'people_vaccinated_per_hndred'},
+        {'label': 'People Fully Vaccinated per Hundred', 'value': 'people_fully_vaccinated_per_hundred'},
+    ], value = 'people_vaccinated_per_hundred',
+    labelStyle={'display': 'inline-block'}
 )
 
-df_states = pd.read_csv(RAW_DAILY_US_BASE)
 
-print(df_states)
-with open("us_state_abbrev.json") as f:
-    us_state_abbrev = json.load(f)
+dbc.Row([dbc.Col(radio_button_vaccine, width=10)], justify='center')
 
-state_to_code = {v: k for k, v in us_state_abbrev.items()}
+@app.callback(
+    Output('update-vaccine', 'figure'),
+    [Input('radio_button_vaccine', 'value')])
+def vaccination_status(parameter):
+    fig = px.bar(df_vacc_max, x='location', y=parameter, color_discrete_sequence=['green'], \
+        height=650)
 
+    return fig
 
-df_states['CODE'] = df_states['Province_State'].map(state_to_code)
-
-print(df_states['CODE'] )
-
-fig_us = go.Figure(data=go.Choropleth(
-    locations=df_states['CODE'],
-    z= def_states['Confirmed'], 
-    locationmode='USA-states',
-    text = df_state['Province_State'],
-    colorscale='Reds',
-    colorbar_title='Confirmed_Cases'
-))
-
-fig_us.update_layout(
-    title_text='COVID Cases USA',
-    geo_scape='usa',
-    autosize=True
-)
-
-dbc.Row([dbc.Col(dbc.Graph(figure=fig_usa, width=10))], justify='center')
+dbc.Row([dbc.Col(dcc.Graph(id='update-vaccine'), width=10)], justify='center')

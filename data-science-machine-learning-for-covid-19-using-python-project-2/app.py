@@ -34,6 +34,12 @@ RAW_DAILY_US_BASE = (
     "csse_covid_19_data/csse_covid_19_daily_reports_us/"
 )
 
+RAW_VACCINATIONS = (
+    "https://raw.githubusercontent.com/owid/covid-19-data/master/"
+    "public/data/vaccinations/vaccinations.csv"
+)
+
+
 # =========================================================
 # Load country codes (ISO3)
 # =========================================================
@@ -99,6 +105,10 @@ class CovidDataLoader:
 
         return df
 
+    @staticmethod
+    def load_vaccinations() -> pd.DataFrame:
+        df = pd.read_csv(RAW_VACCINATIONS)
+        return df
 
 # =========================================================
 # Services
@@ -244,7 +254,47 @@ class USStatesService:
         return df
 
 
+class VaccinationService:
+    @staticmethod
+    def prepare(df: pd.DataFrame) -> pd.DataFrame:
+        df = df.copy()
 
+        df["date"] = pd.to_datetime(df["date"])
+        df["total_vaccinations"] = pd.to_numeric(
+            df["total_vaccinations"], errors="coerce"
+        )
+        df["people_fully_vaccinated"] = pd.to_numeric(
+            df["people_fully_vaccinated"], errors="coerce"
+        )
+
+        return df
+
+    @staticmethod
+    def countries(df: pd.DataFrame) -> list:
+        return sorted(df["location"].dropna().unique())
+
+class VaccinationBarService:
+    @staticmethod
+    def aggregate_max(df: pd.DataFrame) -> pd.DataFrame:
+        df = df.copy()
+
+        numeric_cols = [
+            "total_vaccinations",
+            "people_vaccinated_per_hundred",
+            "people_fully_vaccinated_per_hundred",
+        ]
+
+        for col in numeric_cols:
+            if col in df.columns:
+                df[col] = pd.to_numeric(df[col], errors="coerce")
+
+        df_max = (
+            df.groupby("location", as_index=False)[numeric_cols]
+            .max()
+            .dropna(subset=["location"])
+        )
+
+        return df_max
 
 
 # =========================================================
@@ -281,8 +331,14 @@ df_us_states = USStatesService.prepare(
 )
 
 
+df_vacc_raw = CovidDataLoader.load_vaccinations()
+df_vacc = VaccinationService.prepare(df_vacc_raw)
+
+countries_vacc = VaccinationService.countries(df_vacc)
 
 
+df_vacc_raw = CovidDataLoader.load_vaccinations()
+df_vacc_max = VaccinationBarService.aggregate_max(df_vacc_raw)
 
 # =========================================================
 # WORLD MAP FIGURES
@@ -512,30 +568,95 @@ app.layout = dbc.Container(
         html.Hr(),
 
         dbc.Row(
-            dbc.Col(html.H4("United States COVID-19 – State Data"), width=10),
+            dbc.Col(html.H4("United States COVID-19 Map"), width=10),
             justify="center",
         ),
 
         dbc.Row(
             dbc.Col(
-                dash_table.DataTable(
-                    columns=[
-                        {"name": c.replace("_", " "), "id": c}
-                        for c in df_us_states_table.columns
-                    ],
-                    data=df_us_states_table.to_dict("records"),
-                    page_action="native",
-                    page_size=15,
-                    sort_action="native",
-                    filter_action="native",
-                    style_table={"overflowX": "auto"},
-                    style_header={"fontWeight": "bold"},
-                    style_cell={"textAlign": "center"},
+                dcc.Graph(
+                    id="us-map-graph",
+                    figure=fig_us
                 ),
                 width=10,
             ),
             justify="center",
         ),
+
+        html.Hr(),
+
+        dbc.Row(
+            dbc.Col(html.H4("COVID-19 Vaccination Timeline"), width=10),
+            justify="center",
+        ),
+
+        dbc.Row(
+            dbc.Col(
+                dcc.Dropdown(
+                    id="dropdown-vaccine-timeline",
+                    options=[{"label": c, "value": c} for c in countries_vacc],
+                    value="World",
+                    clearable=False,
+                ),
+                width=5,
+            ),
+            justify="center",
+        ),
+
+        html.Br(),
+
+        dbc.Row(
+            dbc.Col(
+                dcc.Graph(id="vaccine-timeline"),
+                width=10,
+            ),
+            justify="center",
+        ),
+
+        html.Hr(),
+        
+        dbc.Row(
+            dbc.Col(html.H4("COVID-19 Vaccination Status by Country"), width=10),
+            justify="center",
+        ),
+        
+        dbc.Row(
+            dbc.Col(
+                dcc.RadioItems(
+                    id="radio-button-vaccine",
+                    options=[
+                        {
+                            "label": "Total Vaccinations",
+                            "value": "total_vaccinations",
+                        },
+                        {
+                            "label": "People Vaccinated per Hundred",
+                            "value": "people_vaccinated_per_hundred",
+                        },
+                        {
+                            "label": "People Fully Vaccinated per Hundred",
+                            "value": "people_fully_vaccinated_per_hundred",
+                        },
+                    ],
+                    value="people_vaccinated_per_hundred",
+                    labelStyle={"display": "inline-block", "marginRight": "15px"},
+                ),
+                width=10,
+            ),
+            justify="center",
+        ),
+        
+        html.Br(),
+        
+        dbc.Row(
+            dbc.Col(
+                dcc.Graph(id="update-vaccine"),
+                width=10,
+            ),
+            justify="center",
+        ),
+
+
 
 
     ],
@@ -601,7 +722,61 @@ def update_world_map(map_type):
     return fig_world_scatter
 
 
+@app.callback(
+    Output("vaccine-timeline", "figure"),
+    Input("dropdown-vaccine-timeline", "value"),
+)
+def update_vaccine_timeline(country):
+    df_f = df_vacc[df_vacc["location"] == country]
 
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=df_f["date"],
+            y=df_f["total_vaccinations"],
+            fill="tozeroy",
+            name="Total Vaccinations",
+        )
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=df_f["date"],
+            y=df_f["people_fully_vaccinated"],
+            fill="tozeroy",
+            name="People Fully Vaccinated",
+        )
+    )
+
+    fig.update_layout(
+        xaxis_title="Date",
+        yaxis_title="Total Count",
+        title=f"Vaccination Progress – {country}",
+    )
+
+    return fig
+
+@app.callback(
+    Output("update-vaccine", "figure"),
+    Input("radio-button-vaccine", "value"),
+)
+def update_vaccine_bar(metric):
+    fig = px.bar(
+        df_vacc_max,
+        x="location",
+        y=metric,
+        color_discrete_sequence=["green"],
+        height=650,
+    )
+
+    fig.update_layout(
+        xaxis_title="Country",
+        yaxis_title=metric.replace("_", " ").title(),
+        title="COVID-19 Vaccination Status by Country",
+    )
+
+    return fig
 
 # =========================================================
 # Run
