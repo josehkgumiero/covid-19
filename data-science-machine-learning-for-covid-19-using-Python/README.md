@@ -169,6 +169,56 @@ python -m ipykernel install --user --name covid19-venv --display-name "Python (c
 python .\src\validate_venv.py
 ```
 
+# Directories
+```
+data-science-machine-learning-for-covid-19-using-Python/
+├── data/
+├── notebook/                  
+├── src/                                 
+│   ├── config/
+│   │   └── settings.py
+│   │
+│   ├── evaluation/
+│   │   └── evaluator.py
+│   │
+│   ├── inference/
+│   │   └── predictor.py
+│   │
+│   ├── ingestion/
+│   │   └── data_loader.py
+│   │
+│   ├── persistence/
+│   │   └── model_persistence.py
+│   │
+│   ├── pipeline/
+│   │   └── ml_pipeline.py
+│   │            
+│   ├── preprocessing/
+│   │   └── apply_random_undersampling.py
+│   │   └── apply_smote_oversampling.py
+│   │   └── apply_undersampling.py
+│   │   └── feature_selector.py
+│   │   └── imbalance_handler.py
+│   │
+│   ├── training/
+│   │   └── trainer.py
+│   │   
+│   ├── transformation/
+│   │   └── class_weights.py
+│   │   └── data_resampling.py
+│   │   └── understand_imbalance.py
+│   │
+│   └── utils/
+│       └── exceptions.py
+│       └── gitignore_creater.py
+│       └── logger.py
+│       └── python_environment.py
+│       └── reduce_dataset.py
+│
+├── README.md                  
+└── requirements.txt           
+```
+
 # Code
 
 - ```src/config/settings.py```

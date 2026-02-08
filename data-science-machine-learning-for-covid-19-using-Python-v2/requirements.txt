@@ -1,0 +1,10 @@
+# Core Scientific Stack
+numpy>=2.1.0
+pandas>=2.2.3
+matplotlib>=3.9.2
+scikit-learn>=1.5.2
+imbalanced-learn>=0.12.3
+
+# Jupyter Environment
+jupyter>=1.1.0
+ipykernel>=6.29.5

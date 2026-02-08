@@ -18,7 +18,7 @@ venv/
 # =========================
 # Jupyter Notebook
 # =========================
-*.ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # =========================
 # IDEs and editors
@@ -65,8 +65,27 @@ htmlcov/
 # =========================
 # Project data directories
 # =========================
-covid-19-data-science-urban-epidemic-modelling-in-python/data/
-data-science-covid-19-data-analysis-visualization-deployment/data/
-data-science-hands-on-covid-19-data-analysis-visualization/data/
-data-science-machine-learning-for-covid-19-using-Python/data/
-data-science-on-covid-19-corona-virus-spread-data/data/
+covid-19-data-science-urban-epidemic-modelling-in-python/data/*
+!covid-19-data-science-urban-epidemic-modelling-in-python/data/processed/
+!covid-19-data-science-urban-epidemic-modelling-in-python/data/storage/
+covid-19-data-science-urban-epidemic-modelling-in-python/data/raw/
+
+data-science-covid-19-data-analysis-visualization-deployment/data/*
+!data-science-covid-19-data-analysis-visualization-deployment/data/processed/
+!data-science-covid-19-data-analysis-visualization-deployment/data/storage/
+data-science-covid-19-data-analysis-visualization-deployment/data/raw/
+
+data-science-hands-on-covid-19-data-analysis-visualization/data/*
+!data-science-hands-on-covid-19-data-analysis-visualization/data/processed/
+!data-science-hands-on-covid-19-data-analysis-visualization/data/storage/
+data-science-hands-on-covid-19-data-analysis-visualization/data/raw/
+
+data-science-machine-learning-for-covid-19-using-Python/data/*
+!data-science-machine-learning-for-covid-19-using-Python/data/processed/
+!data-science-machine-learning-for-covid-19-using-Python/data/storage/
+data-science-machine-learning-for-covid-19-using-Python/data/raw/
+
+data-science-on-covid-19-corona-virus-spread-data/data/*
+!data-science-on-covid-19-corona-virus-spread-data/data/processed/
+!data-science-on-covid-19-corona-virus-spread-data/data/storage/
+data-science-on-covid-19-corona-virus-spread-data/data/raw/

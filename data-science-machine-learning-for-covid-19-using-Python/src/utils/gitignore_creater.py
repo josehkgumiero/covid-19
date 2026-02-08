@@ -68,10 +68,9 @@ class GitignoreGenerator:
 
     def _build_ignore_patterns(self) -> List[str]:
         """
-        Constrói as regras do .gitignore, incluindo <diretorio>/data/.
-
-        Returns:
-            List[str]: Lista de padrões do .gitignore.
+        Constrói as regras do .gitignore, incluindo regras avançadas
+        para diretórios de dados (data), ignorando tudo e liberando
+        apenas subpastas específicas.
         """
         base_patterns: List[str] = [
             "# =========================",
@@ -94,7 +93,7 @@ class GitignoreGenerator:
             "# =========================",
             "# Jupyter Notebook",
             "# =========================",
-            "*.ipynb_checkpoints/",
+            ".ipynb_checkpoints/",
             "",
             "# =========================",
             "# IDEs and editors",
@@ -143,15 +142,21 @@ class GitignoreGenerator:
             "# =========================",
         ]
 
-
         project_dirs: List[Path] = self._list_project_directories()
 
-        data_patterns: List[str] = [
-            f"{project_dir.name}/data/"
-            for project_dir in project_dirs
-        ]
+        data_patterns: List[str] = []
+
+        for project_dir in project_dirs:
+            data_patterns.extend([
+                f"{project_dir.name}/data/*",
+                f"!{project_dir.name}/data/processed/",
+                f"!{project_dir.name}/data/storage/",
+                f"{project_dir.name}/data/raw/",
+                "",
+            ])
 
         return base_patterns + data_patterns
+
 
     def create_gitignore(self) -> bool:
         """
