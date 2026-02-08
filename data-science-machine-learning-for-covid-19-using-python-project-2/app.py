@@ -39,6 +39,7 @@ RAW_VACCINATIONS = (
     "public/data/vaccinations/vaccinations.csv"
 )
 
+NEWS_ARTICLES_CSV = "covid_new_articles.csv"
 
 # =========================================================
 # Load country codes (ISO3)
@@ -51,6 +52,8 @@ with open("cc3_cn_r.json") as f:
 # =========================================================
 with open("us_state_abbrev.json") as f:
     us_state_abbrev = json.load(f)
+
+
 
 # =========================================================
 # Data Loader
@@ -109,6 +112,14 @@ class CovidDataLoader:
     def load_vaccinations() -> pd.DataFrame:
         df = pd.read_csv(RAW_VACCINATIONS)
         return df
+
+    @staticmethod
+    def load_news_articles() -> pd.DataFrame:
+        return pd.read_csv(
+            NEWS_ARTICLES_CSV,
+            encoding="latin1"  # ou "cp1252"
+        )
+
 
 # =========================================================
 # Services
@@ -296,6 +307,39 @@ class VaccinationBarService:
 
         return df_max
 
+class NewsService:
+    @staticmethod
+    def prepare(df: pd.DataFrame) -> list[dict]:
+        required_cols = ["title","description", "image", "link"]
+
+        for col in required_cols:
+            if col not in df.columns:
+                raise ValueError(f"Missing column: {col}")
+
+        return df[required_cols].to_dict("records")
+
+class NewsCardFactory:
+    @staticmethod
+    def build(article: dict) -> dbc.Col:
+        return dbc.Col(
+            dbc.Card(
+                [
+                    dbc.CardImg(src=article["image"], top=True),
+                    dbc.CardBody(
+                        [
+                            html.H6(article["title"]),
+                            dbc.CardLink(
+                                "Link to the Article",
+                                href=article["link"],
+                                target="_blank",
+                            ),
+                        ]
+                    ),
+                ]
+            ),
+            width=2,
+        )
+
 
 # =========================================================
 # Initial Load
@@ -339,6 +383,15 @@ countries_vacc = VaccinationService.countries(df_vacc)
 
 df_vacc_raw = CovidDataLoader.load_vaccinations()
 df_vacc_max = VaccinationBarService.aggregate_max(df_vacc_raw)
+
+df_news_raw = CovidDataLoader.load_news_articles()
+news_articles = NewsService.prepare(df_news_raw)
+
+news_cards = [
+    NewsCardFactory.build(article)
+    for article in news_articles
+]
+
 
 # =========================================================
 # WORLD MAP FIGURES
@@ -656,9 +709,19 @@ app.layout = dbc.Container(
             justify="center",
         ),
 
+        html.Hr(),
 
+        dbc.Row(
+            dbc.Col(html.H4("Latest COVID-19 News"), width=10),
+            justify="center",
+        ),
 
+        html.Br(),
 
+        dbc.Row(
+            news_cards,
+            justify="center",
+        ),
     ],
     fluid=True,
 )
