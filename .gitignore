@@ -35,11 +35,10 @@ Thumbs.db
 desktop.ini
 
 # =========================
-# Logs and reports
+# Logs
 # =========================
 *.log
 logs/
-reports/
 
 # =========================
 # Build and distribution
@@ -80,10 +79,10 @@ data-science-hands-on-covid-19-data-analysis-visualization/data/*
 !data-science-hands-on-covid-19-data-analysis-visualization/data/storage/
 data-science-hands-on-covid-19-data-analysis-visualization/data/raw/
 
-data-science-machine-learning-for-covid-19-using-Python/data/*
-!data-science-machine-learning-for-covid-19-using-Python/data/processed/
-!data-science-machine-learning-for-covid-19-using-Python/data/storage/
-data-science-machine-learning-for-covid-19-using-Python/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-1/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-1/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-1/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-1/data/raw/
 
 data-science-on-covid-19-corona-virus-spread-data/data/*
 !data-science-on-covid-19-corona-virus-spread-data/data/processed/
