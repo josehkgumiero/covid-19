@@ -26,9 +26,15 @@ slots:
       - type: from_intent
         intent: affirm
         value: "yes"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: cold
       - type: from_intent
         intent: deny
         value: "no"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: cold
 
   fever:
     type: text
@@ -36,9 +42,15 @@ slots:
       - type: from_intent
         intent: affirm
         value: "yes"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: fever
       - type: from_intent
         intent: deny
         value: "no"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: fever
 
   cough:
     type: text
@@ -46,9 +58,15 @@ slots:
       - type: from_intent
         intent: affirm
         value: "yes"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: cough
       - type: from_intent
         intent: deny
         value: "no"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: cough
 
   travel:
     type: text
@@ -56,19 +74,25 @@ slots:
       - type: from_intent
         intent: affirm
         value: "yes"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: travel
       - type: from_intent
         intent: deny
         value: "no"
+        conditions:
+          - active_loop: covid_form
+            requested_slot: travel
 
   isolation_level:
-    type: text
+    type: float
     influence_conversation: false
     mappings:
       - type: from_text
         conditions:
           - active_loop: covid_form
             requested_slot: isolation_level
-
+  
 
 
 responses:

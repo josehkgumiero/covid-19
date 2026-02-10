@@ -1,0 +1,75 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "affirm": 0,
+        "ask_faq": 1,
+        "back": 2,
+        "bot_challenge": 3,
+        "deny": 4,
+        "diagnose_covid": 5,
+        "goodbye": 6,
+        "greet": 7,
+        "inform": 8,
+        "mood_great": 9,
+        "mood_unhappy": 10,
+        "nlu_fallback": 11,
+        "out_of_scope": 12,
+        "restart": 13,
+        "session_start": 14
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_final_score": 13,
+        "utter_ask_cold": 14,
+        "utter_ask_fever": 15,
+        "utter_ask_cough": 16,
+        "utter_ask_travel": 17,
+        "utter_ask_isolation_level": 18,
+        "utter_how_can_i_help": 19,
+        "utter_goodbye": 20,
+        "utter_wrong_isolation_level": 21,
+        "validate_covid_form": 22,
+        "utter_cheer_up": 23,
+        "utter_did_that_help": 24,
+        "utter_greet": 25,
+        "utter_happy": 26,
+        "utter_iamabot": 27,
+        "covid_form": 28
+      },
+      "entities": {
+        "cold": 0,
+        "cough": 1,
+        "fever": 2,
+        "isolation_level": 3,
+        "travel": 4
+      },
+      "slots": {
+        "cold_0": 0,
+        "fever_0": 1,
+        "cough_0": 2,
+        "travel_0": 3
+      },
+      "active_loop": {
+        "covid_form": 0
+      }
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": null
+}
