@@ -1,0 +1,166 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - diagnose_covid
+  - ask_faq
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - inform
+
+entities:
+  - cold
+  - fever
+  - cough
+  - travel
+  - isolation_level
+
+slots:
+  cold:
+    type: text
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "yes"
+      - type: from_intent
+        intent: deny
+        value: "no"
+
+  fever:
+    type: text
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "yes"
+      - type: from_intent
+        intent: deny
+        value: "no"
+
+  cough:
+    type: text
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "yes"
+      - type: from_intent
+        intent: deny
+        value: "no"
+
+  travel:
+    type: text
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "yes"
+      - type: from_intent
+        intent: deny
+        value: "no"
+
+  isolation_level:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: covid_form
+            requested_slot: isolation_level
+
+
+
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+
+  utter_how_can_i_help:
+    - text: "I can help diagnose if you may have COVID-19 or answer FAQs related to COVID-19."
+      buttons:
+        - title: "Diagnose COVID"
+          payload: "/diagnose_covid"
+        - title: "FAQ"
+          payload: "/ask_faq"
+
+  utter_ask_cold:
+    - text: "Do you have a cold?"
+      buttons:
+        - title: "Yes"
+          payload: 'yes'
+        - title: "No"
+          payload: 'no'
+
+  utter_ask_fever:
+    - text: "Do you have a fever?"
+      buttons:
+        - title: "Yes"
+          payload: 'yes'
+        - title: "No"
+          payload: 'no'
+
+  utter_ask_cough:
+    - text: "Do you have a cough?"
+      buttons:
+        - title: "Yes"
+          payload: 'yes'
+        - title: "No"
+          payload: 'no'
+
+
+  utter_ask_travel:
+    - text: "Have you traveled in the last 15 days?"
+      buttons:
+        - title: "Yes"
+          payload: 'yes'
+        - title: "No"
+          payload: 'no'
+
+
+  utter_ask_isolation_level:
+    - text: "What was your isolation level in the last 15 days? Please answer from 1 to 5."
+
+  utter_wrong_isolation_level:
+    - text: "Invalid value. Please answer with a number between 1 and 5."
+
+  utter_goodbye:
+    - text: "Bye! Stay safe."
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  utter_cheer_up:
+    - text: "Here is something to cheer you up 😊"
+
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+actions:
+  - action_final_score
+  - utter_ask_cold
+  - utter_ask_fever
+  - utter_ask_cough
+  - utter_ask_travel
+  - utter_ask_isolation_level
+  - utter_how_can_i_help
+  - utter_goodbye
+  - utter_wrong_isolation_level
+  - validate_covid_form
+
+
+forms:
+  covid_form:
+    required_slots:
+      - cold
+      - fever
+      - cough
+      - travel
+      - isolation_level
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
