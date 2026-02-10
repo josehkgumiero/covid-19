@@ -27,3 +27,8 @@ rules:
       - intent: goodbye
       - action: utter_goodbye
 
+  - rule: respond to faq
+    steps:
+    - intent: faq
+    - action: utter_faq
+

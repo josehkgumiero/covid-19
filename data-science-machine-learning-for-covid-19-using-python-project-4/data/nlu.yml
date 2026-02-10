@@ -103,3 +103,56 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
+- intent: faq/symptoms_coronavirus
+  examples: |
+    - Can you tell me about the symptoms of coronavirus?
+    - How can I know if I have coronavirus?
+    - Can you talk about the symptoms related to covid-19?
+    - What are the symptoms of covid-19 virus?
+
+
+- intent: faq/what_is_covid_19
+  examples: |
+    - What is covid-19?
+    - Can you tell me about te coronavirus?
+    - Please explain me about the covid-19 virus?
+    - Can you give details about the covid-19 virus?
+
+
+- intent: faq/highest_covid_19_cases_country
+  examples: |
+    - Can you tell me about the country with highest covid-19 cases?
+    - Which country has the highest coronavirus cases?
+    - Name the country with maximum covid-19 cases?
+    - Which region has the highest covid-19 cases?
+
+
+- intent: faq/precautions_covid_19
+  examples: |
+    - What are the available vaccines for covid-19?
+    - Which vaccines are available against coronavirus?
+    - Can you name the aprproved vaccines available for covid-19 virus?
+    - What vaccines re currently available to be taken for coronavirus?
+
+- intent: faq/available_vaccines
+  examples: |
+    - What are the available vaccine for covid-19?
+    - Which vaccines are avaiable against coronavirus?
+    - Can you name the approved vaccines available for covid-19 virus?
+    - What vaccines are currently available to be taken for coronavirus?
+
+- intent: faq/covid_19_end
+  examples: |
+    - When will the coronavirus pandemic end?
+    - Do you know when this covid-19 pandemic with end?
+    - Do you have an estimate for the end of covid-19?
+    - What is the prediction for covid-19 pandemic end state?
+
+
+- intent: faq/total_cases_world
+  examples: |
+    - How many total coronavirus cases are in the world?
+    - Can you tell me the total covid-19 cases currently in the world?
+    - Please let me know about the total coronavirus cases present in the world?
+    - What is the total count of coronavirus cases in the world?

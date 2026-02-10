@@ -1,0 +1,84 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "affirm": 0,
+        "ask_faq": 1,
+        "back": 2,
+        "bot_challenge": 3,
+        "deny": 4,
+        "diagnose_covid": 5,
+        "faq": 6,
+        "goodbye": 7,
+        "greet": 8,
+        "inform": 9,
+        "mood_great": 10,
+        "mood_unhappy": 11,
+        "nlu_fallback": 12,
+        "out_of_scope": 13,
+        "restart": 14,
+        "session_start": 15
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_final_score": 13,
+        "utter_ask_cold": 14,
+        "utter_ask_fever": 15,
+        "utter_ask_cough": 16,
+        "utter_ask_travel": 17,
+        "utter_ask_isolation_level": 18,
+        "utter_how_can_i_help": 19,
+        "utter_goodbye": 20,
+        "utter_wrong_isolation_level": 21,
+        "validate_covid_form": 22,
+        "utter_faq": 23,
+        "utter_ask_faq": 24,
+        "utter_cheer_up": 25,
+        "utter_did_that_help": 26,
+        "utter_faq/available_vaccines": 27,
+        "utter_faq/covid_19_end": 28,
+        "utter_faq/highest_covid_19_cases_country": 29,
+        "utter_faq/precautions_covid_19": 30,
+        "utter_faq/total_cases_world": 31,
+        "utter_faq/what_is_covid_19": 32,
+        "utter_greet": 33,
+        "utter_happy": 34,
+        "utter_iamabot": 35,
+        "covid_form": 36
+      },
+      "entities": {
+        "cold": 0,
+        "cough": 1,
+        "fever": 2,
+        "isolation_level": 3,
+        "travel": 4
+      },
+      "slots": {
+        "cold_0": 0,
+        "fever_0": 1,
+        "cough_0": 2,
+        "travel_0": 3
+      },
+      "active_loop": {
+        "covid_form": 0
+      }
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": null
+}

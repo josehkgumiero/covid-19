@@ -16,7 +16,8 @@ stories:
     - intent: great
     - action: utter_how_can_i_help
     - intent: ask_faq
-    - action: utter_cheer_up
-    - action: utter_did_that_help
-    - intent: affirm
-    - action: utter_happy
+    - action: utter_ask_faq
+    - intent: faq/what_is_covid_19
+    - action: utter_faq
+    - intent: goodbye
+    - action: utter_goodbye

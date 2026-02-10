@@ -1,0 +1,32 @@
+{
+  "utter_faq/what_is_covid_19": [
+    {
+      "text": "Coronavirus disease is an infectious disease."
+    }
+  ],
+  "utter_faq/total_cases_world": [
+    {
+      "text": "As of July 31, 2021 total covid-19 cases in he world are 197M."
+    }
+  ],
+  "utter_faq/highest_covid_19_cases_country": [
+    {
+      "text": "USA"
+    }
+  ],
+  "utter_faq/precautions_covid_19": [
+    {
+      "text": "Wear a mask."
+    }
+  ],
+  "utter_faq/available_vaccines": [
+    {
+      "text": "There are 3 covid-19 vaccines."
+    }
+  ],
+  "utter_faq/covid_19_end": [
+    {
+      "text": "There are various estiamtes as to when the pandemic will end."
+    }
+  ]
+}

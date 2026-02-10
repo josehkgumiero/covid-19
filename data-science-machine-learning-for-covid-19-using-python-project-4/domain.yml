@@ -11,6 +11,7 @@ intents:
   - mood_unhappy
   - bot_challenge
   - inform
+  - faq
 
 entities:
   - cold
@@ -140,6 +141,8 @@ responses:
         - title: "No"
           payload: 'no'
 
+  utter_ask_faq:
+    - text: "You cana ask me FAQ questions related to covid-19. Like: What is covid-19?"
 
   utter_ask_isolation_level:
     - text: "What was your isolation level in the last 15 days? Please answer from 1 to 5."
@@ -162,6 +165,24 @@ responses:
   utter_happy:
     - text: "Great, carry on!"
 
+  utter_faq/what_is_covid_19:
+  - text: "Coronavirus disease is an infectious disease."
+
+  utter_faq/total_cases_world:
+  - text: "As of July 31, 2021 total covid-19 cases in he world are 197M."
+
+  utter_faq/highest_covid_19_cases_country:
+  - text: "USA"
+
+  utter_faq/precautions_covid_19:
+  - text: "Wear a mask."
+
+  utter_faq/available_vaccines:
+  - text: "There are 3 covid-19 vaccines."
+
+  utter_faq/covid_19_end:
+  - text: "There are various estiamtes as to when the pandemic will end."
+
 actions:
   - action_final_score
   - utter_ask_cold
@@ -173,6 +194,7 @@ actions:
   - utter_goodbye
   - utter_wrong_isolation_level
   - validate_covid_form
+  - utter_faq
 
 
 forms:
