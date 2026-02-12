@@ -5,10 +5,9 @@ __pycache__/
 *.py[cod]
 *.pyd
 *.pyo
-.Python
 
 # =========================
-# Virtual environments
+# Virtual Environments
 # =========================
 env/
 venv/
@@ -16,23 +15,15 @@ venv/
 .env/
 
 # =========================
-# Jupyter Notebook
+# Jupyter
 # =========================
 .ipynb_checkpoints/
 
 # =========================
-# IDEs and editors
+# IDEs
 # =========================
 .vscode/
 .idea/
-*.code-workspace
-
-# =========================
-# Operating system files
-# =========================
-.DS_Store
-Thumbs.db
-desktop.ini
 
 # =========================
 # Logs
@@ -41,50 +32,58 @@ desktop.ini
 logs/
 
 # =========================
-# Build and distribution
+# Project Data Rules
 # =========================
-build/
-dist/
-*.egg-info/
-
-# =========================
-# Cache and temporary files
-# =========================
-.cache/
-tmp/
-temp/
-
-# =========================
-# Testing and coverage
-# =========================
-.pytest_cache/
-.coverage
-htmlcov/
-
-# =========================
-# Project data directories
-# =========================
+covid-19-data-science-urban-epidemic-modelling-in-python/data/raw/
+covid-19-data-science-urban-epidemic-modelling-in-python/data/storage/
 covid-19-data-science-urban-epidemic-modelling-in-python/data/*
 !covid-19-data-science-urban-epidemic-modelling-in-python/data/processed/
-!covid-19-data-science-urban-epidemic-modelling-in-python/data/storage/
-covid-19-data-science-urban-epidemic-modelling-in-python/data/raw/
+!covid-19-data-science-urban-epidemic-modelling-in-python/data/github_dataset/
 
+data-science-covid-19-data-analysis-visualization-deployment/data/raw/
+data-science-covid-19-data-analysis-visualization-deployment/data/storage/
 data-science-covid-19-data-analysis-visualization-deployment/data/*
 !data-science-covid-19-data-analysis-visualization-deployment/data/processed/
-!data-science-covid-19-data-analysis-visualization-deployment/data/storage/
-data-science-covid-19-data-analysis-visualization-deployment/data/raw/
+!data-science-covid-19-data-analysis-visualization-deployment/data/github_dataset/
 
+data-science-hands-on-covid-19-data-analysis-visualization/data/raw/
+data-science-hands-on-covid-19-data-analysis-visualization/data/storage/
 data-science-hands-on-covid-19-data-analysis-visualization/data/*
 !data-science-hands-on-covid-19-data-analysis-visualization/data/processed/
-!data-science-hands-on-covid-19-data-analysis-visualization/data/storage/
-data-science-hands-on-covid-19-data-analysis-visualization/data/raw/
+!data-science-hands-on-covid-19-data-analysis-visualization/data/github_dataset/
 
+data-science-machine-learning-for-covid-19-using-python-project-1/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-1/data/storage/
 data-science-machine-learning-for-covid-19-using-python-project-1/data/*
 !data-science-machine-learning-for-covid-19-using-python-project-1/data/processed/
-!data-science-machine-learning-for-covid-19-using-python-project-1/data/storage/
-data-science-machine-learning-for-covid-19-using-python-project-1/data/raw/
+!data-science-machine-learning-for-covid-19-using-python-project-1/data/github_dataset/
 
+data-science-machine-learning-for-covid-19-using-python-project-2/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-2/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-2/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-2/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-2/data/github_dataset/
+
+data-science-machine-learning-for-covid-19-using-python-project-3/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-3/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-3/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-3/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-3/data/github_dataset/
+
+data-science-machine-learning-for-covid-19-using-python-project-4/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-4/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-4/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-4/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-4/data/github_dataset/
+
+data-science-machine-learning-for-covid-19-using-python-project-5/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-5/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-5/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-5/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-5/data/github_dataset/
+
+data-science-on-covid-19-corona-virus-spread-data/data/raw/
+data-science-on-covid-19-corona-virus-spread-data/data/storage/
 data-science-on-covid-19-corona-virus-spread-data/data/*
 !data-science-on-covid-19-corona-virus-spread-data/data/processed/
-!data-science-on-covid-19-corona-virus-spread-data/data/storage/
-data-science-on-covid-19-corona-virus-spread-data/data/raw/
+!data-science-on-covid-19-corona-virus-spread-data/data/github_dataset/
