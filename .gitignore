@@ -31,9 +31,6 @@ venv/
 *.log
 logs/
 
-# =========================
-# Project Data Rules
-# =========================
 covid-19-data-science-urban-epidemic-modelling-in-python/data/raw/
 covid-19-data-science-urban-epidemic-modelling-in-python/data/storage/
 covid-19-data-science-urban-epidemic-modelling-in-python/data/*
@@ -81,6 +78,12 @@ data-science-machine-learning-for-covid-19-using-python-project-5/data/storage/
 data-science-machine-learning-for-covid-19-using-python-project-5/data/*
 !data-science-machine-learning-for-covid-19-using-python-project-5/data/processed/
 !data-science-machine-learning-for-covid-19-using-python-project-5/data/github_dataset/
+
+data-science-machine-learning-for-covid-19-using-python-project-6/data/raw/
+data-science-machine-learning-for-covid-19-using-python-project-6/data/storage/
+data-science-machine-learning-for-covid-19-using-python-project-6/data/*
+!data-science-machine-learning-for-covid-19-using-python-project-6/data/processed/
+!data-science-machine-learning-for-covid-19-using-python-project-6/data/github_dataset/
 
 data-science-on-covid-19-corona-virus-spread-data/data/raw/
 data-science-on-covid-19-corona-virus-spread-data/data/storage/

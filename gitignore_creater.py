@@ -2,8 +2,7 @@
 gitignore_creator.py
 
 Gera automaticamente um .gitignore na raiz do projeto
-(COVID-19) e cria as subpastas padrão dentro de cada
-projeto caso não existam.
+sem criar diretórios adicionais.
 """
 
 from pathlib import Path
@@ -12,8 +11,7 @@ from typing import List
 
 class GitignoreGenerator:
     """
-    Responsável por gerar o .gitignore na raiz do projeto
-    e garantir que as subpastas de dados existam.
+    Responsável por gerar o .gitignore na raiz do projeto.
     """
 
     def __init__(self, project_root: Path) -> None:
@@ -30,17 +28,6 @@ class GitignoreGenerator:
             and not item.name.startswith(".")
             and item.name != ".git"
         ]
-
-    def _ensure_data_subfolders(self, project_dir: Path) -> None:
-        """
-        Garante que as subpastas data/raw, data/processed
-        e data/storage existam.
-        """
-        data_root = project_dir / "data"
-        subfolders = ["raw", "processed", "storage"]
-
-        for folder in subfolders:
-            (data_root / folder).mkdir(parents=True, exist_ok=True)
 
     def _build_ignore_patterns(self) -> List[str]:
         """
@@ -80,18 +67,11 @@ class GitignoreGenerator:
             "*.log",
             "logs/",
             "",
-            "# =========================",
-            "# Project Data Rules",
-            "# =========================",
         ]
 
         data_patterns: List[str] = []
 
         for project_dir in self._list_project_directories():
-
-            # Garante criação das subpastas
-            self._ensure_data_subfolders(project_dir)
-
             data_patterns.extend([
                 f"{project_dir.name}/data/raw/",
                 f"{project_dir.name}/data/storage/",
