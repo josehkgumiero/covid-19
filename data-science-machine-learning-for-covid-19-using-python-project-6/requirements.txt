@@ -1,0 +1,28 @@
+# ================================
+# CORE NUMERICAL COMPUTATION
+# ================================
+
+numpy>=1.26.0          # Computação numérica vetorizada e operações matemáticas
+pandas>=2.1.0          # Manipulação e análise de dados estruturados (DataFrames)
+
+# ================================
+# DATA VISUALIZATION
+# ================================
+
+matplotlib>=3.8.0      # Biblioteca base para geração de gráficos
+seaborn>=0.13.0        # Visualizações estatísticas de alto nível (baseada em matplotlib)
+plotly>=5.18.0
+
+# ================================
+# TIME SERIES FORECASTING
+# ================================
+
+prophet>=1.1.5         # Modelagem de séries temporais (Meta Prophet)
+                      # Inclui funcionalidades de cross_validation e performance_metrics
+
+# ================================
+# JUPYTER ENVIRONMENT
+# ================================
+
+notebook>=7.0.0        # Interface Jupyter Notebook
+ipykernel>=6.25.0      # Kernel Python para execução no Jupyter
